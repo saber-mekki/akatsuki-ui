@@ -1,6 +1,5 @@
 import React, { useState, useEffect, CSSProperties } from "react";
 import styled from "styled-components";
-import "./menu.css";
 
 export interface ButtonProps {
 	primary?: boolean;
@@ -93,7 +92,7 @@ const MenuItemButton = styled.button<{
 	}
 `;
 
-export const FlexMenu: React.FC<ButtonProps> = ({
+export const Menu: React.FC<ButtonProps> = ({
 	primary = false,
 	size = "medium",
 	backgroundColor,

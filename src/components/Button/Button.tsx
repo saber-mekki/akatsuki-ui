@@ -1,69 +1,75 @@
 import React from "react";
-import "./button.css";
 import styled from "styled-components";
 
+/**
+ * Button component for Storybook
+ *
+ * @component
+ * @example
+ * const label = 'Button'
+ * return (
+ *   <Button label={label} />
+ * )
+ */
 interface ButtonProps {
-	/**
-	 * Is this the principal call to action on the page?
-	 */
 	primary?: boolean;
-	/**
-	 * What background color to use
-	 */
 	backgroundColor?: string;
-	/**
-	 * How large should the button be?
-	 */
 	size?: "small" | "medium" | "large";
-	/**
-	 * Button contents
-	 */
 	label?: string;
 	borderRadius?: number;
-	/**
-	 * Optional click handler
-	 */
 	onClick?: () => void;
 }
 
 const StyledButton = styled.button<ButtonProps>`
+	font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 700;
+	border: 0;
+	border-radius: 3em;
+	cursor: pointer;
+	display: inline-block;
+	line-height: 1;
 	padding: 10px 20px;
 	border: none;
-	border-radius: ${({ borderRadius }) => `${borderRadius}px` };
+	border-radius: ${({ borderRadius }) => `${borderRadius}px`};
 	cursor: pointer;
 	transition: background-color 0.3s;
 	background-color: ${({ primary }) => (primary ? "blue" : "gray")};
-	color: white;
-
+	color: ${({ primary }) => (primary ? "white" : "#333")};
+	background-color: ${({ primary }) => (primary ? "#1ea7fd" : "transparent")};
+	box-shadow: ${({ primary }) =>
+		primary ? "" : "rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;"};
 	&:hover {
 		background-color: ${({ primary }) => (primary ? "darkblue" : "darkgray")};
 	}
+	padding: ${({ size }) =>
+		{
+			console.log({ cc:size });
+			return size === "small"
+			? "10px 16px"
+			: size === "medium"
+				? "11px 20px"
+				: "12px 24px"}};
+	font-size: ${({ size }) =>
+		size === "small" ? "12px" : size === "medium" ? "14px" : "16px"};
 `;
 
-/**
- * FlexButton
- */
-export const FlexButton = ({
+export const Button = ({
 	primary = false,
-	size = "medium",
+	size = "small",
 	backgroundColor,
 	label,
 	borderRadius = 20,
 	...props
 }: ButtonProps) => {
-	const mode = primary
-		? "storybook-button--primary"
-		: "storybook-button--secondary";
+
 	return (
 		<div>
 			<StyledButton
 				{...props}
+				size={size}
 				borderRadius={borderRadius}
 				style={{ backgroundColor }}
 				primary={primary}
-				className={["storybook-button", `storybook-button--${size}`, mode].join(
-					" "
-				)}
 			>
 				{label}
 			</StyledButton>

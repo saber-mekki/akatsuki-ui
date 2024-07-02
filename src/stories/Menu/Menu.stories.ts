@@ -1,12 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FlexMenu, ButtonProps } from "../components/Menu";
-import "../components/Menu/menu.css";
+import { Menu } from "../../index";
 
-const meta: Meta<typeof FlexMenu> = {
-	title: "Example/FlexMenu",
-	component: FlexMenu,
+const meta: Meta<typeof Menu> = {
+	title: "Example/Menu",
+	component: Menu,
 	parameters: {
 		layout: "fullscreen",
+		docs: {
+			description: {
+				component: "Our Menu component",
+			},
+		},
 	},
 };
 
