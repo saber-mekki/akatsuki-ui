@@ -19,7 +19,7 @@
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "npm run build-storybook -o storybook-static --quiet",
+		"build-storybook": "build-storybook -o storybook-static --quiet",
 		"prepublishOnly": "npm run build",
 		"prepare-deploy": "rm -rf public && mkdir public && cp -r build/* public/ && cp -r storybook-static/* public/",
 		"predeploy": "npm run build-storybook",
