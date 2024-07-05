@@ -26,10 +26,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build React project
-        run: npm run build
-
+      - name: Build Storybook and React project
+        run: |
+          npm run build
+          npm run predeploy
+          
       - name: Deploy to GitHub Pages
-        run: 
-          npm run predeploy 
-          npm run deploy
+        run: npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
