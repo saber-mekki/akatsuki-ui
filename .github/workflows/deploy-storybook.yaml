@@ -6,28 +6,40 @@ on:
       - "dev" # Change to the branch you want to deploy from
 
 permissions:
-  contents: read
+   contents: write
   pages: write
   id-token: write
- 
-# List of jobs
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    # Job steps
+
     steps:
-      # Manual Checkout
-      - uses: actions/checkout@v4
- 
-      # Set up Node
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
- 
-      #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
-      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
-        with:
-          install_command: yarn install # default: npm ci
-          build_command: yarn build-storybook # default: npm run build-storybook
-          path: storybook-static # default: dist/storybook
-          checkout: false # default: true
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Storybook and React project
+        run: |
+          npm run build
+          npm run predeploy
+          
+      - name: Configure Git
+        run: |
+          git config --global user.email saber.mekki@gmail.com
+          git config --global user.name saber-mekki
+
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/saber-mekki/akatsuki-ui.git
+          npm run deploy
+          
